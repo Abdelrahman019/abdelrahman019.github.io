@@ -1,0 +1,416 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Abdelrahman Elatroush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one left-aligned column, ruled sections with a narrow label rail on wide screens, scoreboard strip under the hero. */
+  :root {
+    --bg: #F2F4F3;
+    --surface: #FFFFFF;
+    --fg: #111A19;
+    --muted: #56635F;
+    --line: #D5DCD9;
+    --accent: #0A7B63;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #DDF0EA;
+    --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1514; --surface: #151E1D; --fg: #E8EFED; --muted: #92A19C;
+      --line: #263331; --accent: #3CC9A5; --accent-ink: #06110E; --accent-soft: #14302A;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1514; --surface: #151E1D; --fg: #E8EFED; --muted: #92A19C;
+    --line: #263331; --accent: #3CC9A5; --accent-ink: #06110E; --accent-soft: #14302A;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 20px 56px;
+  }
+  .wrap { max-width: 920px; margin-inline: auto; display: flex; flex-direction: column; gap: 0; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .mono { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  /* top bar */
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding-block: 8px 28px; }
+  .top .mark { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; }
+  .top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .top nav a { font-size: 0.9rem; color: var(--muted); text-decoration: none; padding-block: 4px; }
+  .top nav a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* hero */
+  .hero { display: flex; flex-direction: column; gap: 22px; padding-block: 28px 40px; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 8.5vw, 5.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .hero .role { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.15rem, 2.6vw, 1.5rem); margin: 0; color: var(--accent); }
+  .hero .usp { font-size: clamp(1.1rem, 2.2vw, 1.35rem); line-height: 1.5; max-width: 40em; margin: 0; text-wrap: pretty; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 46px; padding-inline: 22px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none; border-radius: 6px;
+    border: 2px solid var(--fg);
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--fg); }
+  .btn.ghost:hover { background: var(--fg); color: var(--bg); }
+
+  /* scoreboard */
+  .board {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    border-block: 2px solid var(--fg);
+  }
+  .board > div { padding: 18px 16px; display: flex; flex-direction: column; gap: 4px; border-inline-start: 1px solid var(--line); min-width: 0; }
+  .board > div:first-child { border-inline-start: 0; padding-inline-start: 0; }
+  .board b { font-family: var(--font-display); font-size: 2.3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .board span { font-size: 0.88rem; color: var(--muted); line-height: 1.4; }
+
+  /* sections */
+  section { display: grid; grid-template-columns: 1fr; gap: 14px; padding-block: 44px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: 0; }
+  section > h2 { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; padding-top: 6px; }
+  .body { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+  @media (min-width: 760px) {
+    section { grid-template-columns: 170px 1fr; gap: 32px; }
+  }
+  .lead { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.3rem, 2.8vw, 1.75rem); line-height: 1.3; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  p { margin: 0; max-width: 65ch; text-wrap: pretty; }
+  .muted { color: var(--muted); }
+
+  /* rows (services, experience, education) */
+  .rows { display: flex; flex-direction: column; }
+  .row { display: grid; grid-template-columns: 1fr; gap: 6px; padding-block: 18px; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; padding-top: 0; }
+  .row h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
+  .row .meta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); letter-spacing: 0.02em; }
+  .row p { color: var(--fg); }
+  .row ul { margin: 4px 0 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 6px; max-width: 65ch; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag { font-family: var(--font-mono); font-size: 0.74rem; padding: 3px 9px; border-radius: 4px; background: var(--accent-soft); color: var(--fg); }
+
+  /* project case studies */
+  .case { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .case header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+  .case h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; margin: 0; letter-spacing: -0.01em; }
+  .case dl { margin: 0; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .case dt { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+  .case dd { margin: 2px 0 0; max-width: 65ch; }
+  @media (min-width: 640px) {
+    .case dl { grid-template-columns: 110px 1fr; gap: 12px 20px; }
+    .case dd { margin: 0; }
+  }
+
+  /* skills */
+  .skillgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px 28px; }
+  .skillgrid h3 { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .skillgrid p { font-size: 0.97rem; }
+
+  /* achievements */
+  .ach { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .ach li { display: grid; grid-template-columns: 1fr; gap: 2px; padding-block: 14px; border-top: 1px solid var(--line); }
+  .ach li:first-child { border-top: 0; padding-top: 0; }
+  .ach b { font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; }
+  .ach span { color: var(--muted); font-size: 0.93rem; }
+
+  /* contact */
+  .cta-block { background: var(--fg); color: var(--bg); border-radius: 10px; padding: clamp(24px, 5vw, 44px); display: flex; flex-direction: column; gap: 22px; margin-block-start: 8px; }
+  .cta-block h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 4.5vw, 2.8rem); line-height: 1.05; letter-spacing: -0.025em; margin: 0; text-transform: none; color: var(--bg); padding: 0; }
+  .cta-block p { color: var(--bg); opacity: 0.85; }
+  .contacts { display: flex; flex-direction: column; border-top: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); }
+  .contacts .c { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 14px; padding-block: 12px; border-bottom: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); }
+  .contacts .label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; width: 92px; flex: none; }
+  .contacts .val { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; user-select: all; font-size: 0.97rem; }
+  .contacts a.val { text-decoration: underline; text-underline-offset: 3px; }
+  .copy { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; min-height: 36px; padding-inline: 14px; border-radius: 5px; border: 1.5px solid var(--bg); background: transparent; color: var(--bg); cursor: pointer; }
+  .copy:hover { background: var(--bg); color: var(--fg); }
+
+  footer { padding-block: 28px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85rem; color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn, .copy { transition: background-color 0.15s, color 0.15s, filter 0.15s; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="top">
+    <span class="mark">A. Elatroush</span>
+    <nav aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <span class="mono">Computer Engineering · Nile University · Egypt</span>
+    <h1>Abdelrahman Elatroush</h1>
+    <p class="role">Algorithms engineer, contest problem setter and full-stack developer</p>
+    <p class="usp">I help programming-contest organizers and aspiring competitors get contest-ready problems and stronger algorithm skills through original problem setting, edge-case-proof test suites, and structured coaching.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#contact">Start a project</a>
+      <a class="btn ghost" href="#projects">See my work</a>
+    </div>
+  </header>
+
+  <div class="board" role="list" aria-label="Key numbers">
+    <div role="listitem"><b>600+</b><span>teams in the NUCPA online round I helped run</span></div>
+    <div role="listitem"><b>180+</b><span>teams in the onsite finals</span></div>
+    <div role="listitem"><b>6</b><span>original problems authored for the finals</span></div>
+    <div role="listitem"><b>500K+</b><span>URLs in my phishing-detection dataset</span></div>
+  </div>
+
+  <section id="about">
+    <h2>About</h2>
+    <div class="body">
+      <p class="lead">I write problems that are hard to solve and hard to break.</p>
+      <p>I'm a Computer Engineering student at Nile University on a full scholarship. I got into algorithms through competitive programming, qualified for the ACPC and ECPC finals, and now lead the ICPC NU Community as its president and head instructor.</p>
+      <p>That work gave me a narrow, useful skill set. I design problems, write reference solutions in C++ and Python, and build the generators, validators and checkers that make a contest fair. Outside contests, I build web apps and machine learning pipelines, and I like projects where correctness matters.</p>
+      <p class="muted">Based in Egypt. Working languages: English (C1) and Arabic (native).</p>
+    </div>
+  </section>
+
+  <section id="services">
+    <h2>Services</h2>
+    <div class="body">
+      <div class="rows">
+        <div class="row">
+          <h3>Competitive programming problem setting</h3>
+          <p>Original algorithmic problems with statements, constraints, and full reference solutions in C++ and Python, ready for a school, university or community contest.</p>
+          <div class="tags"><span class="tag">problem setting</span><span class="tag">contest preparation</span><span class="tag">Polygon</span></div>
+        </div>
+        <div class="row">
+          <h3>Test-suite engineering</h3>
+          <p>Generators, strict validators, custom checkers and interactors built with testlib. I add deliberately flawed solutions and run stress tests, so slow or wrong code fails and time limits stay tight.</p>
+          <div class="tags"><span class="tag">testlib</span><span class="tag">stress testing</span><span class="tag">checkers</span><span class="tag">validators</span></div>
+        </div>
+        <div class="row">
+          <h3>Algorithms and data structures coaching</h3>
+          <p>Workshops and one-to-one sessions on graph theory, dynamic programming and advanced data structures, with a learning path built around where the student is today.</p>
+          <div class="tags"><span class="tag">C++</span><span class="tag">graphs</span><span class="tag">dynamic programming</span><span class="tag">ICPC prep</span></div>
+        </div>
+        <div class="row">
+          <h3>Full-stack web development</h3>
+          <p>Web apps with authentication, role-based access and a properly normalized database behind them.</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">Flask</span><span class="tag">REST APIs</span></div>
+        </div>
+        <div class="row">
+          <h3>Machine learning and image processing</h3>
+          <p>Classification pipelines with feature engineering and model comparison, plus classical image processing in MATLAB when a learned model isn't an option.</p>
+          <div class="tags"><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Pandas</span><span class="tag">MATLAB</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="body">
+
+      <article class="case">
+        <header>
+          <h3>NUCPA contest problem set</h3>
+          <span class="meta mono">2024 – present · ICPC NU Community</span>
+        </header>
+        <dl>
+          <dt>Challenge</dt>
+          <dd>Run a multi-university contest for ages 15 to 25, from high school to university, with a fair and reliable problem set.</dd>
+          <dt>What I did</dt>
+          <dd>Authored 6 original problems for the finals and wrote complete reference solutions in C++ and Python. Built generators, validators and custom checkers in testlib, then wrote flawed solutions and stress-tested them to confirm the tests caught real mistakes.</dd>
+          <dt>Outcome</dt>
+          <dd>600+ teams in the online qualification round and 180+ teams in the onsite finals.</dd>
+        </dl>
+        <div class="tags"><span class="tag">C++</span><span class="tag">Python</span><span class="tag">testlib</span><span class="tag">Polygon</span></div>
+      </article>
+
+      <article class="case">
+        <header>
+          <h3>Phishing URL Detection</h3>
+          <span class="meta mono">2026 · Machine learning</span>
+        </header>
+        <dl>
+          <dt>Challenge</dt>
+          <dd>Flag malicious links from the URL alone, fast enough to run in real time.</dd>
+          <dt>What I did</dt>
+          <dd>Trained on a dataset of 500K+ URLs. Engineered URL-based features and compared Random Forest, XGBoost and Logistic Regression.</dd>
+          <dt>Outcome</dt>
+          <dd>A working detector with a real-time inference pipeline.</dd>
+        </dl>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span></div>
+      </article>
+
+      <article class="case">
+        <header>
+          <h3>Learning Management System</h3>
+          <span class="meta mono">2025 · Full-stack</span>
+        </header>
+        <dl>
+          <dt>Challenge</dt>
+          <dd>Give different kinds of users the right access to courses and content.</dd>
+          <dt>What I did</dt>
+          <dd>Built a full LMS with authentication, role-based access control and a normalized relational schema covering user roles, course assignments and content management.</dd>
+          <dt>Outcome</dt>
+          <dd>A complete system where each role sees and manages only what it should.</dd>
+        </dl>
+        <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">RBAC</span></div>
+      </article>
+
+      <article class="case">
+        <header>
+          <h3>Car License Plate Detection</h3>
+          <span class="meta mono">2025 · Image processing</span>
+        </header>
+        <dl>
+          <dt>Challenge</dt>
+          <dd>Find license plates in images using no machine learning at all.</dd>
+          <dt>What I did</dt>
+          <dd>Built a detection pipeline from Gaussian filtering, Canny edge detection, morphological operations and connected component analysis.</dd>
+          <dt>Outcome</dt>
+          <dd>71% accuracy with purely classical techniques.</dd>
+        </dl>
+        <div class="tags"><span class="tag">MATLAB</span><span class="tag">Canny</span><span class="tag">morphology</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="body">
+      <div class="rows">
+        <div class="row">
+          <h3>Community President, Head Instructor and Lead Problem Setter</h3>
+          <span class="meta">ICPC NU Community, Nile University · 2024 – present</span>
+          <ul>
+            <li>Lead the community and run its weekly lectures and problem-solving workshops on advanced data structures, graph theory and dynamic programming.</li>
+            <li>Head problem setter and tester for NUCPA, the Nile University Competitive Programming Arena.</li>
+            <li>Designed structured learning paths for competitive programming preparation.</li>
+          </ul>
+        </div>
+        <div class="row">
+          <h3>Founder and Organizer, Chess Community</h3>
+          <span class="meta">STEM High School for Gifted Students · 2023</span>
+          <ul>
+            <li>Founded the school's chess community and organized two school-wide competitions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="body">
+      <div class="skillgrid">
+        <div><h3>Problem setting</h3><p>testlib (checkers, validators, generators, interactors), Polygon, stress testing, edge-case design</p></div>
+        <div><h3>Languages</h3><p>C++ (STL, optimization), Python, C, JavaScript, PHP, MATLAB, HTML/CSS</p></div>
+        <div><h3>Algorithms</h3><p>Data structures, graph theory, dynamic programming, time and space complexity analysis</p></div>
+        <div><h3>Web and data</h3><p>MySQL, SQLite, relational schema design, ERD modeling, Flask, REST APIs</p></div>
+        <div><h3>Machine learning</h3><p>Scikit-learn, Pandas, NumPy, feature engineering, Random Forest, XGBoost</p></div>
+        <div><h3>Tools</h3><p>Git, Unix/Linux, Bash, OOP</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <div class="body">
+      <ul class="ach">
+        <li><b>ACPC and ECPC finalist</b><span>Arab and Africa Collegiate Programming Contest and Egyptian Collegiate Programming Contest</span></li>
+        <li><b>Codeforces rating above 1600</b><span>Plus an AtCoder rating above 1600</span></li>
+        <li><b>FIRST Lego League Egypt, 1st place (2018)</b><span>Represented Egypt at the World Finals in the US and ranked 44th worldwide</span></li>
+        <li><b>6th place, Air Defence College Project Competition (2022)</b><span>Built a Smart Wheelchair as the submitted project</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="body">
+      <div class="rows">
+        <div class="row">
+          <h3>B.Sc. Computer Engineering, Full Scholarship</h3>
+          <span class="meta">Nile University, Egypt · Sep 2023 – Jul 2027</span>
+        </div>
+        <div class="row">
+          <h3>High School Diploma, Math Track</h3>
+          <span class="meta">STEM High School for Gifted Students, Egypt · Sep 2020 – Jul 2023</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="cta-block" style="grid-column: 1 / -1;">
+      <h2>Need a problem set, a tutor or a web app?</h2>
+      <p>Send me a short note with what you're building, your deadline and your budget. I reply with a plan and a price.</p>
+      <div class="contacts">
+        <div class="c"><span class="label">Email</span><span class="val" id="v-email">abdelrahmanelatroush2004@gmail.com</span><button class="copy" type="button" data-target="v-email">Copy</button></div>
+        <div class="c"><span class="label">Phone</span><span class="val" id="v-phone">+20 122 721 3257</span><button class="copy" type="button" data-target="v-phone">Copy</button></div>
+        <div class="c"><span class="label">LinkedIn</span><a class="val" id="v-li" href="https://linkedin.com/in/abdelrahman-elatroush">linkedin.com/in/abdelrahman-elatroush</a><button class="copy" type="button" data-target="v-li">Copy</button></div>
+        <div class="c"><span class="label">GitHub</span><a class="val" id="v-gh" href="https://github.com/Abdelrahman019">github.com/Abdelrahman019</a><button class="copy" type="button" data-target="v-gh">Copy</button></div>
+        <div class="c"><span class="label">Codeforces</span><a class="val" id="v-cf" href="https://codeforces.com/profile/Atroush">codeforces.com/profile/Atroush</a><button class="copy" type="button" data-target="v-cf">Copy</button></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Abdelrahman Elatroush · Egypt</span>
+    <span>Available for freelance work</span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      var text = el.textContent.trim();
+      function done() {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+      }
+      function fallback() {
+        var r = document.createRange();
+        r.selectNodeContents(el);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(r);
+        btn.textContent = 'Selected';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+      }
+      try {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } catch (e) {
+        fallback();
+      }
+    });
+  });
+</script>
+
+</body></html>
